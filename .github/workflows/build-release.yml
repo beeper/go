@@ -10,10 +10,14 @@ jobs:
 
     - uses: actions/setup-go@v5
       with:
-        go-version: '1.21.1'
+        go-version: '1.21.3'
 
     - name: Build
-      run: cd src && ./make.bash
+      run: |
+        export GOROOT_FINAL=$(go env GOROOT)
+        export GOROOT_BOOTSTRAP=$(go env GOROOT)
+        cd src
+        ./make.bash -v
 
     - name: Release
       uses: softprops/action-gh-release@v2
@@ -21,4 +25,3 @@ jobs:
         tag_name: ${{ github.head_ref || github.ref_name }}/${{ github.sha }}
         files: |
           bin/go
-          bin/gofmt

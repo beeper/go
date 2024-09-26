@@ -381,6 +381,11 @@ func parsedebugvars() {
 		debug.madvdontneed = 1
 	}
 
+	// Beep beep: disable stack shrinking, possibly to fix:
+	// https://linear.app/beeper/issue/BLEEP-25986#comment-99e33468
+	// https://github.com/golang/go/issues/64781
+	debug.gcshrinkstackoff = 1
+
 	godebug := gogetenv("GODEBUG")
 
 	p := new(string)
